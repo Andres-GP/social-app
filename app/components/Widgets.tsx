@@ -60,7 +60,7 @@ const Widgets = () => {
 
   return (
     <aside className="p-3 flex flex-col space-y-4 md:w-[400px] xs:w-full">
-      <section className="bg-[#EFF3F4] text-[#89959D] flex items-center space-x-3 h-[44px] rounded-full pl-5">
+      <section className="bg-[#EFF3F4] text-[#89959D] flex items-center space-x-3 h-[44px] rounded-full pl-5 ps-10">
         <MagnifyingGlassIcon className="w-[20px] h-[20px]" />
         <label htmlFor="search" className="sr-only">
           Search Post

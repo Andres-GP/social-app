@@ -13,7 +13,7 @@ import Button from "./Button";
 const PostInput = () => {
   const [press, setPress] = useState();
   return (
-    <form className="flex space-x-5 p-3">
+    <form className="flex space-x-5 p-3 border-b border-gray-100">
       {/* <Image src="" width={44} height={44} alt="Logo" className="w-11 h-11" /> */}
 
       <div className="w-full">
@@ -27,7 +27,7 @@ const PostInput = () => {
           placeholder="What's happening!?"
         />
 
-        <div className="flex justify-between pt-5 items-center">
+        <div className="flex justify-between pt-5 items-center border-t border-gray-100">
           <div role="group" aria-label="Post tools" className="flex space-x-1.5">
             <PhotoIcon className="w-[22px] h-[22px] text-[#F4AF01]" />
             <ChartBarIcon className="w-[22px] h-[22px] text-[#F4AF01]" />
