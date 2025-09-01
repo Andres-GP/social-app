@@ -14,14 +14,7 @@ const PostInput = () => {
   const [press, setPress] = useState();
   return (
     <form className="flex space-x-5 p-3">
-      {/* Logo del usuario */}
-      {/* <Image 
-        src={} 
-        width={44} 
-        height={44} 
-        alt="Logo" 
-        className="w-11 h-11"
-      /> */}
+      {/* <Image src="" width={44} height={44} alt="Logo" className="w-11 h-11" /> */}
 
       <div className="w-full">
         <label htmlFor="postContent" className="sr-only">
@@ -43,7 +36,7 @@ const PostInput = () => {
             <MapPinIcon className="w-[22px] h-[22px] text-[#F4AF01]" />
           </div>
 
-          <Button text="Post" color="#F4AF01" handleClick={() => setPress()} />
+          <Button text="Post" className="bg-[#F4AF01]" handleClick={() => setPress()} />
         </div>
       </div>
     </form>

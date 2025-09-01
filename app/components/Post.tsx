@@ -11,7 +11,7 @@ const Post = () => {
   return (
     <article>
       <PostHeader />
-      <footer className="ml-16 p-3 flex space-x-14">
+      <div className="ml-16 p-3 flex space-x-14">
         <button
           className="relative cursor-pointer hover:text-[#F4AF01] transition"
           aria-label="Comment"
@@ -32,7 +32,7 @@ const Post = () => {
         <div className="relative cursor-not-allowed" aria-hidden="true">
           <ArrowUpTrayIcon className="w-[22px] h-[22px]" />
         </div>
-      </footer>
+      </div>
     </article>
   );
 };

@@ -35,7 +35,7 @@ const WhoToFollow = ({ avatar, userName, fullName }: WhoToFollowProps) => {
 
       <Button
         text={follow ? "Followed" : "Follow"}
-        color={follow ? "#0F1419" : "#0F1419"}
+        className={follow ? "bg-[#0F1419]" : "bg-[#0F1419]"}
         handleClick={() => setFollow((prev) => !prev)}
       />
     </article>
