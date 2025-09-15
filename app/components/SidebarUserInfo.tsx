@@ -33,11 +33,15 @@ const SidebarUserInfo = () => {
     <>
       <div
         onClick={handleOpenMenu}
-        className="flex items-center space-x-2 hover:bg-gray-500 hover:bg-opacity-10 transition p-3 pe-6 rounded-full cursor-pointer xl:p-3 xl:pe-6"
+        className="flex items-center justify-start space-x-2 hover:bg-gray-500 hover:bg-opacity-10 transition p-3 pe-6 rounded-full cursor-pointer xl:p-3 xl:pe-6 w-fit xl:w-[240px] "
       >
-        <div className="hidden xl:flex flex-col text-sm">
-          <span className="font-bold">{user.name}</span>
-          <span className="text-gray-500">@{user.username}</span>
+        <div className="hidden xl:flex flex-col text-sm max-w-40">
+          <span className="whitespace-nowrap text-ellipsis overflow-hidden font-bold">
+            {user.name}
+          </span>
+          <span className="whitespace-nowrap text-ellipsis overflow-hidden text-gray-500">
+            @{user.username}
+          </span>
         </div>
       </div>
       <Menu

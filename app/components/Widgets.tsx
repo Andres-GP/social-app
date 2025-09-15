@@ -40,7 +40,6 @@ const Widgets = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  console.log(trends, "trends");
   useEffect(() => {
     fetch("/api/trending")
       .then((res) => {

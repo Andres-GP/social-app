@@ -7,13 +7,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { openLogInModal, closeLogInModal } from "@/redux/slices/modalSlice";
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase";
 
 const LogInModal = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const isOpen = useSelector((state: RootState) => state.modals.logInModalOpen);
 
   const dispatch: AppDispatch = useDispatch();
 
+  async function handleLogin() {
+    await signInWithEmailAndPassword(auth, email, password);
+    dispatch(closeLogInModal());
+  }
+
+  async function handleLoginAsGuest() {
+    await signInWithEmailAndPassword(auth, "guest@guest.com", "1234567890");
+    dispatch(closeLogInModal());
+  }
   return (
     <>
       <Button
@@ -31,19 +44,19 @@ const LogInModal = () => {
           role="dialog"
           aria-modal="true"
           aria-labelledby="login-title"
-          className="w-full h-full sm:w-[600px] sm:h-fit bg-white sm:rounded-xl mt-20 flex flex-col"
+          className="outline:none w-full h-full sm:w-[600px] sm:h-fit bg-white sm:rounded-xl mt-20 flex flex-col"
         >
-          <header className="flex items-center justify-between px-5 pt-5">
-            <h1 id="login-title" className="text-3xl font-bold">
-              Log in
-            </h1>
+          <header className="flex items-center justify-start px-5 pt-5">
             <button type="button" aria-label="Close" onClick={() => dispatch(closeLogInModal())}>
               <XMarkIcon className="w-7 cursor-pointer" />
             </button>
           </header>
           <main className="flex-1 px-4 sm:px-20 py-10">
-            <form className="space-y-5">
-              <div className="flex flex-col">
+            <div className="space-y-5">
+              <h1 id="login-title" className="text-3xl font-bold mb-10 text-center">
+                Log in
+              </h1>
+              <fieldset className="w-full space-y-5 mb-10">
                 <label htmlFor="email" className="sr-only">
                   Email
                 </label>
@@ -54,8 +67,10 @@ const LogInModal = () => {
                   placeholder="Email"
                   type="email"
                   required
+                  onChange={(event) => setEmail(event.target.value)}
+                  value={email}
                 />
-              </div>
+              </fieldset>
               <div className="flex flex-col">
                 <label htmlFor="password" className="sr-only">
                   Password
@@ -68,6 +83,8 @@ const LogInModal = () => {
                     placeholder="Password"
                     type={showPassword ? "text" : "password"}
                     required
+                    onChange={(event) => setPassword(event.target.value)}
+                    value={password}
                   />
                   <button
                     type="button"
@@ -82,16 +99,16 @@ const LogInModal = () => {
               <Button
                 text="Log In"
                 className="bg-[#F4AF01] h-[48px] shadow-md w-full"
-                handleClick={() => console.log("Login pressed")}
+                handleClick={() => handleLogin()}
               />
-            </form>
+            </div>
           </main>
           <footer className="px-4 sm:px-20 pb-6 text-center">
             <span className="mb-5 text-sm block">Or</span>
             <Button
               text="Log In as Guest"
-              className="bg-[#F4AF01] h-[48px] shadow-md w-full"
-              handleClick={() => console.log("Guest login pressed")}
+              className="bg-[#F4AF01] h-[48px] shadow-md w-full mb-5"
+              handleClick={() => handleLoginAsGuest()}
             />
           </footer>
         </section>

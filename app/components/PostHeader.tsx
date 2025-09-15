@@ -1,7 +1,18 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { Timestamp } from "firebase/firestore";
+import Moment from "react-moment";
 
-const PostHeader = () => {
+interface PostHeaderProps {
+  username: string;
+  name: string;
+  timestamp?: Timestamp;
+  text: string;
+  replyTo?: string;
+}
+
+const PostHeader = ({ username, name, timestamp, text, replyTo }: PostHeaderProps) => {
   return (
     <article className="flex pl-3 space-x-5">
       <Image
@@ -9,20 +20,30 @@ const PostHeader = () => {
         width={44}
         height={44}
         alt="Profile Picture"
-        className="w-11 h-11 rounded-full"
+        className="w-11 h-11 rounded-full z-10 bg-white"
       />
       <div className="text-[15px] flex flex-col space-y-1.5">
         <header className="flex space-x-1.5 text-[#707E89]">
           <span className="font-bold text-[#0F1419] whitespace-nowrap overflow-hidden text-ellipsis inline-block max-[60px] min-[400]:max-w-[100px] min-[500px]:max-w-[140px] sm:max-w-[160px]">
-            Guest
+            {name.length > 0 ? name : "Guest"}
           </span>
           <span className="inline-block whitespace-nowrap overflow-hidden text-ellipsis max-[60px] min-[400]:max-w-[100px] min-[500px]:max-w-[140px] sm:max-w-[160px]">
-            @guest0000234
+            {username.length > 0 ? username : "guest123"}
           </span>
-          <span aria-hidden="true">·</span>
-          <time dateTime="2025-08-28">A day ago</time>
+          {timestamp && (
+            <>
+              <span aria-hidden="true">·</span>
+              <Moment fromNow>{timestamp.toDate()}</Moment>
+            </>
+          )}
         </header>
-        <p>wefwergerg</p>
+        <p>{text}</p>
+
+        {replyTo && (
+          <span className="text-[15px] text-[#707E89]">
+            Replying to <span className="text-[#F4AF01]">@{replyTo}</span>
+          </span>
+        )}
       </div>
     </article>
   );

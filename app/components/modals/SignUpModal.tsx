@@ -8,10 +8,12 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { openSignUpModal, closeSignUpModal } from "@/redux/slices/modalSlice";
 import { signInUser } from "@/redux/slices/userSlice";
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "@/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignUpModal = () => {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(true);
@@ -21,7 +23,26 @@ const SignUpModal = () => {
 
   const handleSignUp = async () => {
     const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+
+    await updateProfile(userCredentials.user, {
+      displayName: name,
+    });
+
+    dispatch(
+      signInUser({
+        name: userCredentials.user.displayName,
+        username: userCredentials.user.email!.split("@")[0],
+        email: userCredentials.user.email,
+        uid: userCredentials.user.uid,
+      })
+    );
+    dispatch(closeSignUpModal());
   };
+
+  async function handleLoginAsGuest() {
+    await signInWithEmailAndPassword(auth, "guest@guest.com", "1234567890");
+    dispatch(closeSignUpModal());
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -30,7 +51,7 @@ const SignUpModal = () => {
       // Handle Redux Actions
       dispatch(
         signInUser({
-          name: "",
+          name: currentUser.displayName,
           username: currentUser.email!.split("@")[0],
           email: currentUser.email,
           uid: currentUser.uid,
@@ -57,9 +78,9 @@ const SignUpModal = () => {
         <section
           role="dialog"
           aria-modal="true"
-          className="w-full h-full sm:w-[600px] sm:h-fit bg-white sm:rounded-xl mt-20"
+          className="outline:none w-full h-full sm:w-[600px] sm:h-fit bg-white sm:rounded-xl mt-20"
         >
-          <header className="flex justify-end">
+          <header className="flex justify-start">
             <button
               type="button"
               onClick={() => dispatch(closeSignUpModal())}
@@ -70,7 +91,7 @@ const SignUpModal = () => {
             </button>
           </header>
           <main>
-            <div className="pt-10 pb-20 px-4 sm:px-20">
+            <div className="pt-10 pb-12 px-4 sm:px-20">
               <h1 id="signup-title" className="text-3xl font-bold mb-10 text-center">
                 Create your account
               </h1>
@@ -85,6 +106,8 @@ const SignUpModal = () => {
                     placeholder="Name"
                     type="text"
                     required
+                    onChange={(event) => setName(event.target.value)}
+                    value={name}
                   />
                 </label>
 
@@ -133,8 +156,8 @@ const SignUpModal = () => {
 
               <Button
                 text="Log In as Guest"
-                className="bg-[#F4AF01] h-[48px] shadow-md mb-5 w-full"
-                handleClick={() => console.log("press")}
+                className="bg-[#F4AF01] h-[48px] shadow-md w-full"
+                handleClick={() => handleLoginAsGuest()}
               />
             </div>
           </main>
