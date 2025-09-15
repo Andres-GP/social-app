@@ -33,24 +33,28 @@ interface Comment {
   text: string;
   username: string;
 }
+
 const page = async ({ params }: PageProps) => {
   const { id } = params;
   const post = await fetchPost(id);
+
   return (
     <>
-      <div className="text-[#F1419] min-h-screen max-w-[1400px] mx-auto flex flex-col md:flex-row">
-        <Sidebar />
+      <main className="text-[#F1419] min-h-screen max-w-[1400px] mx-auto flex flex-col md:flex-row">
+        <aside>
+          <Sidebar />
+        </aside>
 
-        <div className="flex-grow border max-w2xl border-x border-gray-100">
-          <div className="flex items-center py-4 px-3 text-lg sm:text-xl sticky top-0 z-50 bg-white bg-opacity-80 backdrop-blur-sm font-bold border-b border-gray-100">
-            <Link href="/">
+        <article className="flex-grow border max-w2xl border-x border-gray-100">
+          <header className="flex items-center py-4 px-3 text-lg sm:text-xl sticky top-0 z-50 bg-white bg-opacity-80 backdrop-blur-sm font-bold border-b border-gray-100">
+            <Link href="/" aria-label="Back to Home">
               <ArrowLeftIcon className="w-5 h-5 mr-10" />
             </Link>
-            Bumble
-          </div>
+            Social App
+          </header>
 
-          <div className="flex flex-col p-3 sp space-y-5 border-b border-gray-100">
-            <div className="flex justify-between items-center mb-1.5">
+          <section className="flex flex-col p-3 space-y-5 border-b border-gray-100">
+            <header className="flex justify-between items-center mb-1.5">
               <div className="flex space-x-3">
                 <Image
                   src="/profile_default.png"
@@ -60,39 +64,54 @@ const page = async ({ params }: PageProps) => {
                   className="w-11 h-11 rounded-full"
                 />
                 <div className="flex flex-col text-[15px]">
-                  <span className="font-bold whitespace-nowrap overflow-hidden text-ellipsis inline-block max-[60px] min-[400]:max-w-[100px] min-[500px]:max-w-[140px] sm:max-w-[160px]">
+                  <strong className="whitespace-nowrap overflow-hidden text-ellipsis inline-block max-[60px] min-[400]:max-w-[100px] min-[500px]:max-w-[140px] sm:max-w-[160px]">
                     {post?.name.length > 0 ? post?.name : "Guest"}
-                  </span>
+                  </strong>
                   <span className="text-[#707E89] whitespace-nowrap overflow-hidden text-ellipsis inline-block max-[60px] min-[400]:max-w-[100px] min-[500px]:max-w-[140px] sm:max-w-[160px]">
                     {post?.username.length > 0 ? post?.username : "guest123"}
                   </span>
                 </div>
               </div>
               <EllipsisHorizontalIcon className="w-5 h-5" />
-            </div>
+            </header>
 
-            <span className="text-[15px]">{post?.text}</span>
-          </div>
+            <p className="text-[15px]">{post?.text}</p>
+          </section>
 
-          <div className="border-b border-gray-100 p-3 text-[15px]">
-            <span className="font-bold">{post?.likes.length}</span> Likes
-          </div>
+          <section className="border-b border-gray-100 p-3 text-[15px]">
+            <strong>{post?.likes.length}</strong> Likes
+          </section>
 
-          <div className="border-b border-gray-100 p-3 text-[15px] flex justify-evenly">
+          <nav
+            className="border-b border-gray-100 p-3 text-[15px] flex justify-evenly"
+            aria-label="Post actions"
+          >
             <ChatBubbleOvalLeftEllipsisIcon className="w-[22px] h-[22px] text-[#707E89] cursor-not-allowed" />
             <HeartIcon className="w-[22px] h-[22px] text-[#707E89] cursor-not-allowed" />
             <ChartBarIcon className="w-[22px] h-[22px] text-[#707E89] cursor-not-allowed" />
             <ArrowUpTrayIcon className="w-[22px] h-[22px] text-[#707E89] cursor-not-allowed" />
-          </div>
+          </nav>
 
-          {post?.comments.map((comment: Comment) => (
-            <Comment name={comment.name} username={comment.username} text={comment.text} />
-          ))}
-        </div>
-        <Widgets />
-      </div>
+          <section>
+            {post?.comments.map((comment: Comment, idx: number) => (
+              <Comment
+                key={idx}
+                name={comment.name}
+                username={comment.username}
+                text={comment.text}
+              />
+            ))}
+          </section>
+        </article>
 
-      <SignUpPrompt />
+        <aside>
+          <Widgets />
+        </aside>
+      </main>
+
+      <footer>
+        <SignUpPrompt />
+      </footer>
     </>
   );
 };
