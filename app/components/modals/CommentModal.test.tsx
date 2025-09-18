@@ -4,18 +4,22 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CommentModal from "./CommentModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { closeCommentModal } from "@/redux/slices/modalSlice";
 
-// Mock de react-redux
+jest.mock("@/firebase");
+
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
   useSelector: jest.fn(),
 }));
 
+const mockedUseSelector = useSelector as unknown as jest.Mock;
+
 describe("CommentModal", () => {
   const commentDetails = {
+    id: "post1",
     name: "John Doe",
     username: "johnd",
     text: "This is a comment",
@@ -26,9 +30,10 @@ describe("CommentModal", () => {
   });
 
   it("renders modal when open is true", () => {
-    (useSelector as jest.Mock).mockImplementation((selectorFn: any) =>
+    mockedUseSelector.mockImplementation((selectorFn: any) =>
       selectorFn({
         modals: { commentModalOpen: true, commentPostDetails: commentDetails },
+        user: { username: "johnd", name: "John Doe" },
       })
     );
 
@@ -40,9 +45,10 @@ describe("CommentModal", () => {
   });
 
   it("does not render modal when open is false", () => {
-    (useSelector as jest.Mock).mockImplementation((selectorFn: any) =>
+    mockedUseSelector.mockImplementation((selectorFn: any) =>
       selectorFn({
         modals: { commentModalOpen: false, commentPostDetails: commentDetails },
+        user: { username: "johnd", name: "John Doe" },
       })
     );
 
@@ -51,9 +57,10 @@ describe("CommentModal", () => {
   });
 
   it("dispatches closeCommentModal when close button is clicked", () => {
-    (useSelector as jest.Mock).mockImplementation((selectorFn: any) =>
+    mockedUseSelector.mockImplementation((selectorFn: any) =>
       selectorFn({
         modals: { commentModalOpen: true, commentPostDetails: commentDetails },
+        user: { username: "johnd", name: "John Doe" },
       })
     );
 

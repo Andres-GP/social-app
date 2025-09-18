@@ -1,7 +1,6 @@
 "use client";
 import { Modal } from "@mui/material";
 import { RootState } from "@/redux/store";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCommentModal } from "@/redux/slices/modalSlice";
 import PostHeader from "../PostHeader";

@@ -5,8 +5,8 @@ import Button from "./Button";
 
 interface WhoToFollowProps {
   avatar: string | StaticImport;
-  fullName: string;
-  userName: string;
+  fullName?: string;
+  userName?: string;
 }
 
 const WhoToFollow = ({ avatar, userName, fullName }: WhoToFollowProps) => {

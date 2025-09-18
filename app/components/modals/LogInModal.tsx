@@ -97,7 +97,7 @@ const LogInModal = () => {
                 </div>
               </div>
               <Button
-                text="Log In"
+                text="Log In!"
                 className="bg-[#F4AF01] h-[48px] shadow-md w-full"
                 handleClick={() => handleLogin()}
               />
