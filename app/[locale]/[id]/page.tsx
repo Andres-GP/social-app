@@ -76,9 +76,9 @@ const page = async ({ params }: PageProps) => {
             <strong>{post?.likes.length} Likes</strong>
           </section>
           <section>
-            {post?.comments.map((comment: Comment, idx: number) => (
+            {post?.comments.map((comment: Comment) => (
               <Comment
-                key={idx}
+                key={`${comment.username}-${comment.name}-${comment.text}`}
                 name={comment.name}
                 username={comment.username}
                 text={comment.text}
