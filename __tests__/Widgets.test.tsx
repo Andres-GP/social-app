@@ -1,5 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import Widgets from "../app/[locale]/components/Widgets";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 jest.mock("../app/[locale]/components/WhoToFollow", () => (props: any) => (
   <div data-testid="who-to-follow">{props.fullName}</div>
@@ -16,79 +18,100 @@ jest.mock("../app/[locale]/components/ErrorMessage", () => (props: any) => (
   <div data-testid="error">{props.error}</div>
 ));
 
-const mockRandomUserResponse = {
-  results: [
-    {
-      name: { first: "John", last: "Doe" },
-      login: { username: "johndoe" },
-      picture: { medium: "/avatar1.png" },
-    },
-    {
-      name: { first: "Jane", last: "Smith" },
-      login: { username: "janesmith" },
-      picture: { medium: "/avatar2.png" },
-    },
-    {
-      name: { first: "Bob", last: "Brown" },
-      login: { username: "bobbrown" },
-      picture: { medium: "/avatar3.png" },
-    },
-  ],
-};
+const mockUsers = [
+  { fullName: "John Doe", userName: "@johndoe", avatar: "/avatar1.png" },
+  { fullName: "Jane Smith", userName: "@janesmith", avatar: "/avatar2.png" },
+];
 
-const mockTrendingResponse = [
+const mockTrends = [
   { country: "US", hashtag: "#React", shares: 1200, link: "https://example.com/react" },
   { country: "US", hashtag: "#JS", shares: 800, link: "https://example.com/js" },
 ];
 
-beforeEach(() => {
-  (global as any).fetch = jest.fn((url) => {
-    if ((url as string).includes("randomuser.me")) {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve(mockRandomUserResponse) });
-    }
-    if ((url as string).includes("/api/trending")) {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve(mockTrendingResponse) });
-    }
-    return Promise.reject("Unknown URL");
-  });
-});
+jest.mock("../hooks/useUsers", () => ({
+  useUsers: jest.fn(),
+}));
 
-afterEach(() => {
-  jest.resetAllMocks();
-});
+jest.mock("../hooks/useTrends", () => ({
+  useTrends: jest.fn(),
+}));
+
+import { useUsers } from "../hooks/useUsers";
+import { useTrends } from "../hooks/useTrends";
 
 describe("Widgets component", () => {
-  it("renders Loader initially", () => {
-    render(<Widgets />);
-    expect(screen.getByTestId("loader")).toBeInTheDocument();
+  beforeEach(() => {
+    (useUsers as jest.Mock).mockReturnValue({ users: [], loading: true, error: null });
+    (useTrends as jest.Mock).mockReturnValue({ trends: [], loading: true, error: null });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders Loader initially", async () => {
+    render(
+      <Provider store={store}>
+        <Widgets />
+      </Provider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loader")).toBeInTheDocument();
+    });
   });
 
   it("renders Trending and WhoToFollow after data fetch", async () => {
-    render(<Widgets />);
+    (useUsers as jest.Mock).mockReturnValue({ users: mockUsers, loading: false, error: null });
+    (useTrends as jest.Mock).mockReturnValue({ trends: mockTrends, loading: false, error: null });
 
-    await waitFor(() => expect(screen.queryByTestId("loader")).not.toBeInTheDocument());
+    render(
+      <Provider store={store}>
+        <Widgets />
+      </Provider>
+    );
 
-    mockTrendingResponse.forEach((trend) => {
-      expect(screen.getByText(trend.hashtag)).toBeInTheDocument();
-    });
-
-    mockRandomUserResponse.results.forEach((user) => {
-      const fullName = `${user.name.first} ${user.name.last}`;
-      expect(screen.getByText(fullName)).toBeInTheDocument();
+    await waitFor(() => {
+      mockTrends.forEach((trend) => {
+        expect(screen.getByText(trend.hashtag)).toBeInTheDocument();
+      });
+      mockUsers.forEach((user) => {
+        expect(screen.getByText(user.fullName)).toBeInTheDocument();
+      });
     });
   });
 
-  it("renders ErrorMessage if trending fetch fails", async () => {
-    (global as any).fetch = jest.fn((url) => {
-      if ((url as string).includes("randomuser.me")) {
-        return Promise.resolve({ ok: true, json: () => Promise.resolve(mockRandomUserResponse) });
-      }
-      return Promise.resolve({ ok: false });
+  it("renders ErrorMessage if trends hook has error", async () => {
+    (useUsers as jest.Mock).mockReturnValue({ users: mockUsers, loading: false, error: null });
+    (useTrends as jest.Mock).mockReturnValue({
+      trends: [],
+      loading: false,
+      error: "Failed to fetch trends",
     });
 
-    render(<Widgets />);
+    render(
+      <Provider store={store}>
+        <Widgets />
+      </Provider>
+    );
 
-    await waitFor(() => expect(screen.getByTestId("error")).toBeInTheDocument());
-    expect(screen.getByTestId("error")).toHaveTextContent("Failed to fetch trends");
+    await waitFor(() => {
+      expect(screen.getByTestId("error")).toHaveTextContent("Failed to fetch trends");
+    });
+  });
+
+  it("renders ErrorMessage if users hook has error", async () => {
+    (useUsers as jest.Mock).mockReturnValue({ users: [], loading: false, error: "Users failed" });
+    (useTrends as jest.Mock).mockReturnValue({ trends: mockTrends, loading: false, error: null });
+
+    render(
+      <Provider store={store}>
+        <Widgets />
+      </Provider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("error")).toHaveTextContent("Users failed");
+    });
   });
 });
