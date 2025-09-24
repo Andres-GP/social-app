@@ -4,7 +4,8 @@ export async function GET() {
   try {
     const res = await fetch("https://www.reddit.com/r/all/top.json?limit=4", {
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; MyNextApp/1.0; +https://example.com)",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
       },
       cache: "no-store",
     });
