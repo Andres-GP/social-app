@@ -13,6 +13,10 @@ export async function GET() {
 
     const data = await res.json();
 
+    if (!data?.data?.children) {
+      return NextResponse.json({ error: "Invalid Reddit response" }, { status: 500 });
+    }
+
     const trends = data.data.children.map((child: any) => ({
       country: "Global",
       hashtag: `#${child.data.subreddit}`,
@@ -22,6 +26,7 @@ export async function GET() {
 
     return NextResponse.json(trends);
   } catch (err: any) {
+    console.error("Trending API error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

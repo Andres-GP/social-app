@@ -4,7 +4,7 @@
     "profile_picture_of": "Profile picture of",
     "trending": "trending",
     "shares": "shares",
-    "profiles_picture": "&apos;s Profile Picture",
+    "profiles_picture": "Profile Picture",
     "followed": "Followed",
     "follow": "Follow",
     "likes": "Likes"
@@ -20,11 +20,11 @@
     "sign_up_form": "Sign Up Form",
     "name": "Name",
     "or": "Or",
-    "dont_miss": "Don&apos;t miss out on anything",
+    "dont_miss": "Do not miss out on anything",
     "first_to_know": "People on Social App are always the first to know."
   },
   "post": {
-    "whats_up": "What&apos;s Up!?",
+    "whats_up": "What is Up!?",
     "post": "Post",
     "send_your_replay": "Send your reply",
     "replying_to": "Replaying to",
