@@ -1,15 +1,18 @@
-/** @jest-config-loader ts-node */
 import type { Config } from "jest";
 
 const config: Config = {
-  preset: "ts-jest/presets/js-with-ts", // TS + JSX
-  testEnvironment: "jsdom", // para poder renderizar componentes React
+  testEnvironment: "jsdom",
   verbose: true,
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
     "\\.(css|scss|sass|less)$": "identity-obj-proxy",
-    "^@/(.*)$": "<rootDir>/$1", // para tus alias de Next.js
+    "^@/(.*)$": "<rootDir>/$1",
   },
-  transformIgnorePatterns: ["/node_modules/(?!(?:@mui/material|@mui/icons-material)/)"],
+  transform: {
+    "^.+\\.(ts|tsx|js|jsx)$": "babel-jest", // <--- usa Babel para TSX/JSX
+  },
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  testPathIgnorePatterns: ["/node_modules/", "/.next/"],
 };
+
 export default config;

@@ -1,0 +1,43 @@
+{
+  "common": {
+    "guest": "Guest",
+    "profile_picture_of": "Profile picture of",
+    "trending": "trending",
+    "shares": "shares",
+    "profiles_picture": "foto de perfil",
+    "followed": "Followed",
+    "follow": "Follow",
+    "likes": "Likes"
+  },
+  "session": {
+    "log_in": "Log in",
+    "sign_out": "Sign Out",
+    "sign_up": "Email",
+    "password": "Password",
+    "log_in_as_guest": "Log In as Guest",
+    "create_your_account": "Create your Account",
+    "sign_up_form": "Sign Up Form",
+    "name": "Name",
+    "or": "Or",
+    "dont_miss": "Don't miss out on anything",
+    "first_to_know": "People on Social App are always the first to know."
+  },
+  "post": {
+    "whats_up": "What's Up!?",
+    "post": "Post",
+    "send_your_replay": "Send your reply",
+    "replaying_to": "Replaying to",
+    "search_post": "Search Post",
+    "days_ago": "{days_ago} days ago"
+  },
+  "error": {
+    "error": "Error"
+  },
+  "languages": {
+    "switch_to_spanish": "Switch to Spanish",
+    "switch_to_english": "Switch to English"
+  },
+  "home": {
+    "home": "Home"
+  }
+}

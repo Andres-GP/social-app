@@ -1,0 +1,43 @@
+{
+  "common": {
+    "guest": "Invitado",
+    "profile_picture_of": "Foto de perfil de",
+    "trending": "en tendencia",
+    "shares": "compartidos",
+    "profiles_picture": "'s profile picture",
+    "followed": "Siguiendo",
+    "follow": "Seguir",
+    "likes": "Likes"
+  },
+  "session": {
+    "log_in": "Entrar",
+    "sign_out": "Salir",
+    "sign_up": "Email",
+    "password": "Contraseña",
+    "log_in_as_guest": "Entrar como Invitado",
+    "create_your_account": "Crea tu cuenta",
+    "sign_up_form": "Registrate",
+    "name": "Nombre",
+    "or": "O",
+    "dont_miss": "No te pierdas de nada",
+    "first_to_know": "Las personas en Social App siempre se enteran primero!"
+  },
+  "post": {
+    "whats_up": "Que hay de nuevo!?",
+    "post": "Postear",
+    "send_your_replay": "Envía tu respuesta",
+    "replaying_to": "Respondiendo a",
+    "search_post": "Buscar Post",
+    "days_ago": "hace {days_ago} dias"
+  },
+  "error": {
+    "error": "Error"
+  },
+  "languages": {
+    "switch_to_spanish": "Cambiar a Español",
+    "switch_to_english": "Cambiar a Ingles"
+  },
+  "home": {
+    "home": "Home"
+  }
+}
