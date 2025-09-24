@@ -8,10 +8,10 @@ import Widgets from "./components/Widgets";
 export default function Home() {
   return (
     <>
-      <div className="text-[#F1419] min-h-screen max-w-[1400px] mx-auto flex flex-col md:flex-row">
+      <div className="text-[#F1419] min-h-screen max-w-[1400px] mx-auto flex flex-col sm:flex-col md:flex-row">
         <Sidebar />
         <PostFeed />
-        <Widgets />
+        <Widgets isDetail={true} />
       </div>
 
       <CommentModal />

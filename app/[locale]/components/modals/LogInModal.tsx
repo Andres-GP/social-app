@@ -15,9 +15,28 @@ const LogInModal = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoginDisabled, setIsLoginDisabled] = useState<boolean>(true);
   const isOpen = useSelector((state: RootState) => state.modals.logInModalOpen);
   const t = useTranslations("session");
   const dispatch: AppDispatch = useDispatch();
+
+  const handleEmail = (val: string) => {
+    setEmail(val);
+    if (password.length > 0 && email.length > 0) {
+      setIsLoginDisabled(false);
+    } else {
+      setIsLoginDisabled(true);
+    }
+  };
+
+  const handlePassword = (val: string) => {
+    setPassword(val);
+    if (password.length > 0 && email.length > 0) {
+      setIsLoginDisabled(false);
+    } else {
+      setIsLoginDisabled(true);
+    }
+  };
 
   async function handleLogin() {
     await signInWithEmailAndPassword(auth, email, password);
@@ -28,6 +47,7 @@ const LogInModal = () => {
     await signInWithEmailAndPassword(auth, "guest@guest.com", "1234567890");
     dispatch(closeLogInModal());
   }
+
   return (
     <>
       <Button
@@ -53,7 +73,7 @@ const LogInModal = () => {
             </button>
           </header>
           <main className="flex-1 px-4 sm:px-20 py-10">
-            <div className="space-y-5">
+            <div className="space-y-5 flex flex-col items-center">
               <h1 id="login-title" className="text-3xl font-bold mb-10 text-center">
                 {t("log_in")}
               </h1>
@@ -68,11 +88,11 @@ const LogInModal = () => {
                   placeholder={t("email")}
                   type="email"
                   required
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={(event) => handleEmail(event.target.value)}
                   value={email}
                 />
               </fieldset>
-              <div className="flex flex-col">
+              <div className="flex flex-col w-full">
                 <label htmlFor="password" className="sr-only">
                   {t("password")}
                 </label>
@@ -84,7 +104,7 @@ const LogInModal = () => {
                     placeholder={t("password")}
                     type={showPassword ? "text" : "password"}
                     required
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={(event) => handlePassword(event.target.value)}
                     value={password}
                   />
                   <button
@@ -100,18 +120,17 @@ const LogInModal = () => {
               <Button
                 text={`${t("log_in")}!`}
                 className="bg-[#F4AF01] h-[48px] shadow-md w-full"
+                disabled={isLoginDisabled}
                 handleClick={() => handleLogin()}
+              />
+              <span className="mb-5 text-sm block">{t("or")}</span>
+              <Button
+                text={t("log_in_as_guest")}
+                className="bg-[#F4AF01] h-[48px] shadow-md w-full mb-5"
+                handleClick={() => handleLoginAsGuest()}
               />
             </div>
           </main>
-          <footer className="px-4 sm:px-20 pb-6 text-center">
-            <span className="mb-5 text-sm block">{t("or")}</span>
-            <Button
-              text={t("log_in_as_guest")}
-              className="bg-[#F4AF01] h-[48px] shadow-md w-full mb-5"
-              handleClick={() => handleLoginAsGuest()}
-            />
-          </footer>
         </section>
       </Modal>
     </>

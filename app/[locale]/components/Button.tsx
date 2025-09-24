@@ -12,7 +12,7 @@ const Button = ({ text, className, handleClick, disabled }: ButtonProps) => {
     <button
       onClick={handleClick}
       disabled={disabled}
-      className={`${className} text-white w-[72px] h-[40px] rounded-full text-sm hover:-translate-y-1 transition`}
+      className={`${className} text-white w-[72px] h-[40px] rounded-full text-sm transition ${disabled ? "transition hover:bg-gray-700" : "transition hover:-translate-y-1"}`}
     >
       {text}
     </button>

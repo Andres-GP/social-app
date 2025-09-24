@@ -12,7 +12,7 @@ const SignUpPrompt = () => {
   const t = useTranslations("session");
   return (
     !name && (
-      <footer className="fixed w-full h-[80px] bg-[#F4AF01] bottom-0 flex justify-center items-center md:space-x-5 lg:justify-between lg:px-20 xl:px:30 2xl:px-80">
+      <footer className="fixed w-full h-[80px] bg-[#F4AF01] bottom-0 flex justify-center items-center md:space-x-5 lg:justify-between lg:px-20 xl:px:30 2xl:px-80 z-50">
         <section className="hidden md:flex flex-col text-white">
           <h2 className="text-xl font-bold">{t("dont_miss")}</h2>
           <p>{t("first_to_know")}</p>

@@ -28,7 +28,7 @@ const PostHeader = ({ username, name, timestamp, text, replyTo }: PostHeaderProp
         alt="Profile Picture"
         className="w-11 h-11 rounded-full z-10 bg-white"
       />
-      <div className="text-[15px] flex flex-col space-y-1.5">
+      <div className="text-[15px] flex flex-col space-y-1.5 lg:w-[600px] md:w-[280px] sm:w-fit w-fit">
         <header className="flex space-x-1.5 text-[#707E89]">
           <span className="font-bold text-[#0F1419] whitespace-nowrap overflow-hidden text-ellipsis inline-block max-[60px] min-[400]:max-w-[100px] min-[500px]:max-w-[140px] sm:max-w-[160px]">
             {name.length > 0 ? name : "Guest"}
@@ -43,7 +43,7 @@ const PostHeader = ({ username, name, timestamp, text, replyTo }: PostHeaderProp
             </>
           )}
         </header>
-        <p>{text}</p>
+        <p className="block max-w-full break-words pr-5">{text}</p>
 
         {replyTo && (
           <span className="text-[15px] text-[#707E89]">

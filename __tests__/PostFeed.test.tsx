@@ -16,7 +16,7 @@ jest.mock("firebase/firestore", () => ({
           id: "1",
           data: () => ({
             username: "user1",
-            content: "Hello world!",
+            text: "Hello world!",
             timestamp: { toDate: () => new Date(2020, 1, 1) },
           }),
         },
@@ -24,7 +24,7 @@ jest.mock("firebase/firestore", () => ({
           id: "2",
           data: () => ({
             username: "user2",
-            content: "Second post",
+            text: "Second post",
             timestamp: { toDate: () => new Date(2020, 1, 2) },
           }),
         },
@@ -36,10 +36,11 @@ jest.mock("firebase/firestore", () => ({
 
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
+  useSelector: jest.fn(),
 }));
 
 jest.mock("../app/[locale]/components/Post", () => (props: any) => (
-  <div data-testid="post">{props.data.content}</div>
+  <div data-testid="post">{props.data.text}</div>
 ));
 jest.mock("../app/[locale]/components/PostInput", () => () => <div data-testid="post-input" />);
 
@@ -48,7 +49,14 @@ import PostFeed from "../app/[locale]/components/PostFeed";
 describe("PostFeed component", () => {
   const mockDispatch = jest.fn();
   const mockedUseDispatch = redux.useDispatch as unknown as jest.Mock;
-  mockedUseDispatch.mockReturnValue(mockDispatch);
+  const mockedUseSelector = redux.useSelector as unknown as jest.Mock;
+
+  beforeEach(() => {
+    mockedUseDispatch.mockReturnValue(mockDispatch);
+    mockedUseSelector.mockImplementation((selectorFn) => selectorFn({ search: { query: "" } }));
+
+    jest.clearAllMocks();
+  });
 
   it("renders PostInput", () => {
     render(<PostFeed />);
@@ -68,5 +76,16 @@ describe("PostFeed component", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       expect.objectContaining({ type: "loading/closeLoadingScreen" })
     );
+  });
+
+  it("filters posts when search query is set", () => {
+    mockedUseSelector.mockImplementation((selectorFn) =>
+      selectorFn({ search: { query: "hello" } })
+    );
+
+    render(<PostFeed />);
+    const posts = screen.getAllByTestId("post");
+    expect(posts).toHaveLength(1);
+    expect(posts[0]).toHaveTextContent("Hello world!");
   });
 });

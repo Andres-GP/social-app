@@ -8,7 +8,7 @@ interface CommentProps {
 }
 const Comment = ({ name, username, text }: CommentProps) => {
   return (
-    <div className="border-b border-gray-100">
+    <div className="border-b border-gray-100 mb-5 pointer-events-none">
       <PostHeader name={name} username={username} text={text} />
     </div>
   );

@@ -12,11 +12,12 @@
   "session": {
     "log_in": "Entrar",
     "sign_out": "Salir",
-    "sign_up": "Email",
+    "sign_up": "Registrate",
+    "email": "Email",
     "password": "Contraseña",
     "log_in_as_guest": "Entrar como Invitado",
     "create_your_account": "Crea tu cuenta",
-    "sign_up_form": "Registrate",
+    "sign_up_form": "Forma de registro",
     "name": "Nombre",
     "or": "O",
     "dont_miss": "No te pierdas de nada",
@@ -26,7 +27,7 @@
     "whats_up": "Que hay de nuevo!?",
     "post": "Postear",
     "send_your_replay": "Envía tu respuesta",
-    "replaying_to": "Respondiendo a",
+    "replying_to": "Respondiendo a",
     "search_post": "Buscar Post",
     "days_ago": "hace {days_ago} dias"
   },

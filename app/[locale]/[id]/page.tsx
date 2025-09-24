@@ -41,13 +41,12 @@ const page = async ({ params }: PageProps) => {
 
         <article className="flex-grow border max-w2xl border-x border-gray-100">
           <header className="flex items-center py-4 px-3 text-lg sm:text-xl sticky top-0 z-50 bg-white bg-opacity-80 backdrop-blur-sm font-bold border-b border-gray-100">
-            <Link href="/" aria-label="Back to Home">
+            <Link href="/" aria-label="Back to Home" className="hover:-translate-y-0.5 transition">
               <ArrowLeftIcon className="w-5 h-5 mr-10" />
             </Link>
             Social App
           </header>
-
-          <section className="flex flex-col p-3 space-y-5 border-b border-gray-100">
+          <section className="flex flex-col p-3 space-y-5 border-b border-gray-100 pointer-events-none lg:w-full md:w-[280px] sm:w-full w-full">
             <header className="flex justify-between items-center mb-1.5">
               <div className="flex space-x-3">
                 <Image
@@ -69,13 +68,13 @@ const page = async ({ params }: PageProps) => {
               <EllipsisHorizontalIcon className="w-5 h-5" />
             </header>
 
-            <p className="text-[15px]">{post?.text}</p>
+            <p className="text-[15px] block max-w-full md:max-w-[300px] lg:max-w-[480px] break-words">
+              {post?.text}
+            </p>
           </section>
-
           <section className="border-b border-gray-100 p-3 text-[15px]">
             <strong>{post?.likes.length} Likes</strong>
           </section>
-
           <section>
             {post?.comments.map((comment: Comment, idx: number) => (
               <Comment
@@ -89,7 +88,7 @@ const page = async ({ params }: PageProps) => {
         </article>
 
         <aside>
-          <Widgets />
+          <Widgets isDetail={false} />
         </aside>
       </main>
 

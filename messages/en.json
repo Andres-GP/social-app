@@ -12,7 +12,8 @@
   "session": {
     "log_in": "Log in",
     "sign_out": "Sign Out",
-    "sign_up": "Email",
+    "sign_up": "Sign Up",
+    "email": "Email",
     "password": "Password",
     "log_in_as_guest": "Log In as Guest",
     "create_your_account": "Create your Account",
@@ -26,7 +27,7 @@
     "whats_up": "What's Up!?",
     "post": "Post",
     "send_your_replay": "Send your reply",
-    "replaying_to": "Replaying to",
+    "replying_to": "Replaying to",
     "search_post": "Search Post",
     "days_ago": "{days_ago} days ago"
   },

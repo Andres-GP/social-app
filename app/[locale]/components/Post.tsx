@@ -2,12 +2,7 @@
 
 import React from "react";
 import PostHeader from "./PostHeader";
-import {
-  ArrowUpTrayIcon,
-  ChartBarIcon,
-  ChatBubbleOvalLeftEllipsisIcon,
-  HeartIcon,
-} from "@heroicons/react/24/outline";
+import { ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from "@heroicons/react/24/outline";
 
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 import { arrayRemove, arrayUnion, doc, DocumentData, updateDoc } from "firebase/firestore";
@@ -27,7 +22,7 @@ const Post = ({ data, id }: PostProps) => {
   const user = useSelector((state: RootState) => state.user);
 
   async function likePost() {
-    if (user.username) {
+    if (!user.username) {
       dispatch(openLogInModal());
       return;
     }
@@ -44,7 +39,7 @@ const Post = ({ data, id }: PostProps) => {
     }
   }
   return (
-    <article className="border-b border-gray-100">
+    <article className="border-b border-gray-100 pt-4">
       <Link href={"/" + id}>
         <PostHeader
           username={data.username}

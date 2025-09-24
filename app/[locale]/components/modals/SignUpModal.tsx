@@ -19,7 +19,35 @@ const SignUpModal = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(true);
   const isOpen = useSelector((state: RootState) => state.modals.signUpModalOpen);
+  const [isLoginDisabled, setIsLoginDisabled] = useState<boolean>(true);
   const t = useTranslations("session");
+
+  const handleName = (val: string) => {
+    setName(val);
+    if (password.length > 0 && email.length > 0 && name.length > 0) {
+      setIsLoginDisabled(false);
+    } else {
+      setIsLoginDisabled(true);
+    }
+  };
+
+  const handleEmail = (val: string) => {
+    setEmail(val);
+    if (password.length > 0 && email.length > 0 && name.length > 0) {
+      setIsLoginDisabled(false);
+    } else {
+      setIsLoginDisabled(true);
+    }
+  };
+
+  const handlePassword = (val: string) => {
+    setPassword(val);
+    if (password.length > 0 && email.length > 0 && name.length > 0) {
+      setIsLoginDisabled(false);
+    } else {
+      setIsLoginDisabled(true);
+    }
+  };
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -49,8 +77,6 @@ const SignUpModal = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) return;
-
-      // Handle Redux Actions
       dispatch(
         signInUser({
           name: currentUser.displayName,
@@ -66,7 +92,7 @@ const SignUpModal = () => {
   return (
     <>
       <Button
-        text="Sign Up"
+        text={t("sign_up")}
         className="w-[88px] h-[40px] md:text-sm font-bold bg-white !text-black"
         handleClick={() => dispatch(openSignUpModal())}
       />
@@ -108,7 +134,7 @@ const SignUpModal = () => {
                     placeholder={t("name")}
                     type="text"
                     required
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) => handleName(event.target.value)}
                     value={name}
                   />
                 </label>
@@ -120,7 +146,7 @@ const SignUpModal = () => {
                     placeholder={t("email")}
                     type="email"
                     required
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => handleEmail(event.target.value)}
                     value={email}
                   />
                 </label>
@@ -133,7 +159,7 @@ const SignUpModal = () => {
                       placeholder={t("password")}
                       type={showPassword ? "text" : "password"}
                       required
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={(event) => handlePassword(event.target.value)}
                       value={password}
                     />
                     <button
@@ -150,6 +176,7 @@ const SignUpModal = () => {
 
               <Button
                 text={t("sign_up")}
+                disabled={isLoginDisabled}
                 className="bg-[#F4AF01] h-[48px] shadow-md mb-5 w-full"
                 handleClick={() => handleSignUp()}
               />

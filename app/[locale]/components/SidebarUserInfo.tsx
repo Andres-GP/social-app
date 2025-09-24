@@ -11,12 +11,15 @@ import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import LocaleSwitch from "./LocaleSwitch";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 const SidebarUserInfo = () => {
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
+  const pathname = usePathname();
+  const locale = pathname.startsWith("/es") ? "es" : "en";
   const t = useTranslations("session");
 
   const handleClose = useCallback(() => {
@@ -33,17 +36,20 @@ const SidebarUserInfo = () => {
     handleClose();
   };
 
-  const pathname = usePathname();
-
-  const locale = pathname.startsWith("/es") ? "es" : "en";
-
-  return (
+  return user.username.length > 0 ? (
     <>
       <div
         onClick={handleOpenMenu}
         className="flex items-center justify-start space-x-2 hover:bg-gray-500 hover:bg-opacity-10 transition p-3 pe-6 rounded-full cursor-pointer xl:p-3 xl:pe-6 w-fit xl:w-[240px] "
       >
-        <div className="hidden xl:flex flex-col text-sm max-w-40">
+        <Image
+          src={"/profile_default.png"}
+          width={44}
+          height={44}
+          alt={"Profile Picture"}
+          className="w-11 h-11 z-10 rounded-full bg-white"
+        />
+        <div className="flex flex-col text-sm max-w-40">
           <span className="whitespace-nowrap text-ellipsis overflow-hidden font-bold">
             {user.name}
           </span>
@@ -66,6 +72,8 @@ const SidebarUserInfo = () => {
         <MenuItem onClick={handleSignOut}>{t("sign_out")}</MenuItem>
       </Menu>
     </>
+  ) : (
+    <div className="w-fit xl:w-[240px] h-3"></div>
   );
 };
 

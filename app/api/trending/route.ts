@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const res = await fetch("https://www.reddit.com/r/all/top.json?limit=4", {
-      headers: {
-        "User-Agent": "my-next-app",
-      },
+      headers: { "User-Agent": "my-next-app" },
       cache: "no-store",
     });
 

@@ -1,78 +1,48 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import WhoToFollow from "./WhoToFollow";
 import Trending from "./Trending";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
 import { useTranslations } from "next-intl";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "@/redux/slices/searchSlice";
+import { useUsers } from "@/hooks/useUsers";
+import { useTrends } from "@/hooks/useTrends";
 
-interface Trend {
-  country: string;
-  hashtag: string;
-  shares: number;
-  link: string;
+interface WidgetsProps {
+  isDetail?: boolean;
 }
 
-interface User {
-  fullName: string;
-  userName: string;
-  avatar: string;
-}
-
-const Widgets = () => {
-  const [users, setUsers] = useState<User[]>([]);
+const Widgets = ({ isDetail }: WidgetsProps) => {
   const t = useTranslations("post");
+  const dispatch = useDispatch();
+  const { trends, loading: trendsLoading, error: trendsError } = useTrends();
+  const { users, loading: usersLoading, error: usersError } = useUsers();
 
-  useEffect(() => {
-    fetch("https://randomuser.me/api/?results=3&inc=name,login,picture")
-      .then((res) => res.json())
-      .then((data) => {
-        const formatted: User[] = data.results.map((u: any) => ({
-          fullName: `${u.name.first} ${u.name.last}`,
-          userName: `@${u.login.username}`,
-          avatar: u.picture.medium,
-        }));
-        setUsers(formatted);
-      });
-  }, []);
-
-  const [trends, setTrends] = useState<Trend[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch("/api/trending")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch trends");
-        return res.json();
-      })
-      .then((data) => {
-        if (data.error) throw new Error(data.error);
-        setTrends(data);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <Loader className="md:w-[400px] xs:w-full" />;
-  if (error) return <ErrorMessage error={error} />;
+  if (trendsLoading || usersLoading) return <Loader className="md:w-[400px] xs:w-full" />;
+  if (trendsError || usersError)
+    return <ErrorMessage error={trendsError ?? usersError ?? "Unknown error"} />;
 
   return (
     <aside className="p-3 flex flex-col space-y-4 md:w-[400px] xs:w-full">
-      <section className="bg-[#EFF3F4] text-[#89959D] flex items-center space-x-3 h-[44px] rounded-full pl-5 ps-10">
-        <MagnifyingGlassIcon className="w-[20px] h-[20px]" />
-        <label htmlFor="search" className="sr-only">
-          {t("search_post")}
-        </label>
-        <input
-          id="search"
-          type="text"
-          placeholder={t("search_post")}
-          className="bg-transparent outline-none"
-        />
-      </section>
+      {isDetail && (
+        <section className="bg-[#EFF3F4] text-[#89959D] flex items-center space-x-3 h-[44px] rounded-full pl-5 ps-10">
+          <MagnifyingGlassIcon className="w-[20px] h-[20px]" />
+          <label htmlFor="search" className="sr-only">
+            {t("search_post")}
+          </label>
+          <input
+            id="search"
+            type="text"
+            placeholder={t("search_post")}
+            className="bg-transparent outline-none"
+            onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+          />
+        </section>
+      )}
 
       <section className="bg-[#EFF3F4] rounded-xl p-3" aria-label="Trending posts">
         {trends.length > 0 &&
