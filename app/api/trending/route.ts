@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const res = await fetch("https://www.reddit.com/r/all/top.json?limit=4", {
+    const proxyUrl = "https://corsproxy.io/?";
+    const redditUrl = encodeURIComponent("https://www.reddit.com/r/all/top.json?limit=4");
+
+    const res = await fetch(`${proxyUrl}${redditUrl}`, {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
