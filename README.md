@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js + TypeScript Application with i18n, Tailwind, Firebase, and Redux
 
-## Getting Started
+This is a fully-featured **Next.js** application built with **TypeScript**, deployed on **Vercel**. It supports internationalization (i18n), API integration with **Axios**, **Tailwind CSS**, **Firebase Authentication**, **Redux** for state management, and includes both **unit tests** and **component tests**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of Contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Demo](#demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Scripts](#scripts)
+- [Testing](#testing)
+- [Folder Structure](#folder-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Demo
 
-## Learn More
+The app is deployed on **Vercel**:  
+[View Live Demo](https://social-app-puce-delta.vercel.app/es)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Next.js + TypeScript** for a modern, type-safe React framework.
+- **Internationalization (i18n)** for multi-language support.
+- **Axios** for API calls.
+- **Tailwind CSS** for responsive and fast styling.
+- **Firebase Authentication** (Email/Password, Google Sign-In, etc.).
+- **Redux Toolkit** for global state management.
+- Custom **React Hooks** for reusable logic.
+- **Posting** features with real-time updates.
+- **Unit Tests** and **Component Tests** using Jest and React Testing Library.
+- SEO optimized with **Next.js metadata**.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Framework:** Next.js
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **API Client:** Axios
+- **State Management:** Redux Toolkit
+- **Authentication & Database:** Firebase
+- **Testing:** Jest + React Testing Library
