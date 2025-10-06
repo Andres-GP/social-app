@@ -1,21 +1,8 @@
+# SocialApp
+
 # Next.js + TypeScript Application with i18n, Tailwind, Firebase, and Redux
 
 This is a fully-featured **Next.js** application built with **TypeScript**, deployed on **Vercel**. It supports internationalization (i18n), API integration with **Axios**, **Tailwind CSS**, **Firebase Authentication**, **Redux** for state management, and includes both **unit tests** and **component tests**.
-
----
-
-## Table of Contents
-
-- [Demo](#demo)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Scripts](#scripts)
-- [Testing](#testing)
-- [Folder Structure](#folder-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
