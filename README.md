@@ -9,7 +9,7 @@ This is a fully-featured **Next.js** application built with **TypeScript**, depl
 ## Demo
 
 The app is deployed on **Vercel**:  
-[View Live Demo](https://social-app-puce-delta.vercel.app/es)
+[View Live Demo](https://go-eat-it.vercel.app/)
 
 ---
 
